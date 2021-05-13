@@ -1,0 +1,15 @@
+header {
+    color: #051c80;
+    text-align: center;
+}
+
+.start-btn {
+    font-size: 28px;
+    color: #007bff;
+    margin: 20px;
+    padding: 6px 14px;
+    border-radius: 80px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}  
