@@ -2,7 +2,10 @@ let score = 0;
 let timeLeft = 50;
 const timePenalty = -5;
 
-// create array for questions & answers
+
+let currentQuestion = 0;
+
+// created array of objects
 var quizQuestions = [
     {
         question: "Which event occurs when the user clicks on an HTML element?",
@@ -53,10 +56,48 @@ var quizQuestions = [
         answer: 'd'
     },
 ];
+
+
+var finalQuestionIndex = quizQuestions.length -1;
+var currentQuestionIndex = 0;
+var questionsEl = document.getElementById("question");
 let startQuizEl = document.querySelector("#start-btn");
 let containerEl = document.querySelector(".container");
 let modalEl = document.querySelector(".modal");
 let timerEl = document.querySelector("#timer");
+var choiceOptionA = document.querySelector(".a");
+var choiceOptionB = document.querySelector(".b");
+var choiceOptionC = document.querySelector(".c");
+var choiceOptionD = document.querySelector(".d");
+
+function startQuiz() {
+    // hides homepage & displays quiz
+    modalEl.setAttribute("class", "hide");
+    containerEl.removeAttribute("class", "hide");
+    countdowmTimer();
+    showQuestion();
+
+};
+
+function showQuestion() {
+    if (currentQuestionIndex === finalQuestionIndex) {
+        return userScore();
+    } 
+    var currentQuestion = quizQuestions[currentQuestionIndex];
+    questionsEl.innerHTML = "<h2>" + currentQuestion.question + "</h2>";
+    choiceOptionA.innerHTML = currentQuestion.a;
+    choiceOptionB.innerHTML = currentQuestion.b;
+    choiceOptionC.innerHTML = currentQuestion.c;
+    choiceOptionD.innerHTML = currentQuestion.d;
+
+    choiceOptionA.addEventListener("click", nextQuestion);
+};
+
+function nextQuestion() {
+currentQuestionIndex[1];
+}
+
+
 
 function countdowmTimer() {
     let timer = setInterval(function () {
@@ -66,24 +107,10 @@ function countdowmTimer() {
         } else {
             clearInterval(timer);
             alert('Game Over!');
+            userScore();
         }
     }, 1000);
-}
-
-
-function showQuestion() {
-    quizQuestions.forEach(element => console.log(element.question));
-}
-
-
-function startQuiz() {
-    modalEl.setAttribute("class", "hide")
-    containerEl.removeAttribute("class", "hide")
-    countdowmTimer();
-    showQuestion();
-
-}
-
+};
 
 
 // starts coding quiz

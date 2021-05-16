@@ -28,38 +28,37 @@
     </div>
 
     <section class="container hide">
-        <p>Time Left: <p id="timer"></p></p>
-        
+        <p>Time:
+        <p id="timer"></p>
+        </p>
+
         <div id="game">
-            <h2 id="question">What is JavaScript?</h2>
+            <div id="question"><h2>What is JavaScript?</h2></div>
             <div class="choice-container">
                 <p class="choice-options">A</p>
-                <p class="choice-text">Choice 1</p>
+                <p class="choice-text a">Choice 1</p>
             </div>
             <div class="choice-container">
                 <p class="choice-options">B</p>
-                <p class="choice-text">Choice 2</p>
+                <p class="choice-text b">Choice 2</p>
             </div>
             <div class="choice-container">
                 <p class="choice-options">C</p>
-                <p class="choice-text">Choice 3</p>
-            </div>
+                <p class="choice-text c">Choice 3</p>
+            </div>  
             <div class="choice-container">
                 <p class="choice-options">D</p>
-                <p class="choice-text">Choice 4</p>
+                <p class="choice-text d">Choice 4</p>
             </div>
         </div>
     </section>
 
-    <section class="game-over-container hide">
-        <!-- enter score and name -->
-        <h2 id="score"</h2>
-
-
-
-
-
+    <section class="game-over hide">
+        <div id="finalScore"></div>
+        <p class="username-input">Enter your name here:</p>
+        <button id="scoreSubmit">Submit</button>
     </section>
+
 
     <script src="./assets/js/script.js"></script>
 </body>
