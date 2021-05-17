@@ -50,11 +50,12 @@ var jsCodingQuiz = [
     },
 ];
 
+//variables
 let score = 0;
 let timeLeft = 30;
 const timePenalty = 5;
-var finalQuestionIndex = jsCodingQuiz.length;
-var currentQuestionIndex = 0;
+var lastQuestionIndex = jsCodingQuiz.length;
+var questionIndex = 0;
 var questionsEl = document.getElementById("question");
 let startQuizEl = document.querySelector("#start-btn");
 let containerEl = document.querySelector(".container");
@@ -68,11 +69,12 @@ var choiceOptionC = document.querySelector("#c");
 var choiceOptionD = document.querySelector("#d");
 var correct;
 
+// displays questions in order
 var showQuestion = function () {
-    if (currentQuestionIndex === finalQuestionIndex) {
+    if (questionIndex === lastQuestionIndex) {
         return userScore();
     } 
-    var currentQuestion = jsCodingQuiz[currentQuestionIndex];
+    var currentQuestion = jsCodingQuiz[questionIndex];
     questionsEl.innerHTML = "<h2>" + currentQuestion.question + "</h2>";
     choiceOptionA.innerHTML = currentQuestion.a;
     choiceOptionB.innerHTML = currentQuestion.b;
@@ -89,8 +91,9 @@ function startQuiz() {
 };
 
 function countdowmTimer() {
-    let timer = setInterval(function () {
+    timer = setInterval(function () {
        timerEl.textContent = "Time: " + timeLeft;
+       // decreases timer until it is zero
         if (timeLeft >= 0) {
             timeLeft--;
         } else {
@@ -105,29 +108,32 @@ function countdowmTimer() {
 
 //displays quiz results & allows user to enter name
 function userScore() {
+    clearInterval(timer);
     containerEl.setAttribute("class", "hide");
     gameOverEl.removeAttribute("class", "hide");
     finalScoreEl.textContent = "Thank you for playing. Your score is " + score + ".";
 };
 
+// determines correct/incorrect answers from user
 function compareAnswer(answer) {
-    correct = jsCodingQuiz[currentQuestionIndex].answer;
+    correct = jsCodingQuiz[questionIndex].answer;
 
-    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
+    if (answer === correct && questionIndex !== lastQuestionIndex){
+        // correct answers increases score
         score++;
         alert("Correct!");
-        currentQuestionIndex++;
+        questionIndex++;
         showQuestion();
-    } else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex) {
-        // If incorrect, subtract 5sec from timer
+    } else if (answer !== correct && questionIndex !== lastQuestionIndex) {
+        // incorrect answers subtracts 5 seconds from timer
         timeLeft = timeLeft - timePenalty;
         alert("Incorrect!")
-        currentQuestionIndex++;     
+        questionIndex++;     
         showQuestion();
     } else {
         userScore();
     };
 };
 
-// starts coding quiz
+// begins quiz
 startQuizEl.addEventListener("click", startQuiz);

@@ -55,3 +55,10 @@
     background-color: #051c80;
     color: white;
 }
+
+/* Media queries for breakpoints */
+@media screen and (max-width: 575px) {
+    #finalscore {
+        width: 100%;
+  }
+}
