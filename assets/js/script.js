@@ -1,12 +1,5 @@
-let score = 0;
-let timeLeft = 50;
-const timePenalty = -5;
-
-
-let currentQuestion = 0;
-
 // created array of objects
-var quizQuestions = [
+var jsCodingQuiz = [
     {
         question: "Which event occurs when the user clicks on an HTML element?",
         a: 'onmouseover',
@@ -40,14 +33,6 @@ var quizQuestions = [
         answer: 'd'
     },
     {
-        question: "Inside which HTML element do we put the JavaScript?",
-            a: '<script>',
-            b: '<js>',
-            c: '<javascript>',
-            d: '<scripting>',
-        answer: 'a'
-    },
-    {
         question: "How do you create a function in JavaScript?",
             a: 'myFunction function{}',
             b: 'function:myFunction()',
@@ -55,54 +40,58 @@ var quizQuestions = [
             d: 'function myFunction()',
         answer: 'd'
     },
+    {
+        question: "Inside which HTML element do we put the JavaScript?",
+            a: 'script',
+            b: 'js',
+            c: 'javascript',
+            d: 'scripting',
+        answer: 'a'
+    },
 ];
 
-
-var finalQuestionIndex = quizQuestions.length -1;
+let score = 0;
+let timeLeft = 50;
+const timePenalty = 5;
+var finalQuestionIndex = jsCodingQuiz.length;
 var currentQuestionIndex = 0;
 var questionsEl = document.getElementById("question");
 let startQuizEl = document.querySelector("#start-btn");
 let containerEl = document.querySelector(".container");
 let modalEl = document.querySelector(".modal");
 let timerEl = document.querySelector("#timer");
-var choiceOptionA = document.querySelector(".a");
-var choiceOptionB = document.querySelector(".b");
-var choiceOptionC = document.querySelector(".c");
-var choiceOptionD = document.querySelector(".d");
+let gameOverEl = document.querySelector(".game-over");
+var choiceOptionA = document.querySelector("#a");
+var choiceOptionB = document.querySelector("#b");
+var choiceOptionC = document.querySelector("#c");
+var choiceOptionD = document.querySelector("#d");
+var correct;
 
-function startQuiz() {
-    // hides homepage & displays quiz
-    modalEl.setAttribute("class", "hide");
-    containerEl.removeAttribute("class", "hide");
-    countdowmTimer();
-    showQuestion();
-
-};
-
-function showQuestion() {
+var showQuestion = function () {
     if (currentQuestionIndex === finalQuestionIndex) {
         return userScore();
     } 
-    var currentQuestion = quizQuestions[currentQuestionIndex];
+    var currentQuestion = jsCodingQuiz[currentQuestionIndex];
     questionsEl.innerHTML = "<h2>" + currentQuestion.question + "</h2>";
     choiceOptionA.innerHTML = currentQuestion.a;
     choiceOptionB.innerHTML = currentQuestion.b;
     choiceOptionC.innerHTML = currentQuestion.c;
     choiceOptionD.innerHTML = currentQuestion.d;
+}       
 
-    choiceOptionA.addEventListener("click", nextQuestion);
+function startQuiz() {
+    debugger;
+    // hides homepage & displays quiz
+    modalEl.setAttribute("class", "hide");
+    containerEl.removeAttribute("class", "hide");
+    countdowmTimer();
+    showQuestion();
 };
-
-function nextQuestion() {
-currentQuestionIndex[1];
-}
-
-
 
 function countdowmTimer() {
     let timer = setInterval(function () {
-       timerEl.textContent = timeLeft;
-        if (timeLeft > 1) {
+       timerEl.textContent = "Time: " + timeLeft;
+        if (timeLeft >= 0) {
             timeLeft--;
         } else {
             clearInterval(timer);
@@ -112,6 +101,29 @@ function countdowmTimer() {
     }, 1000);
 };
 
+function compareAnswers(answer) {
+    correct = jsCodingQuiz[currentQuestionIndex].answer
+
+    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
+        score++;
+        alert("Correct!");
+        currentQuestionIndex++;
+        showQuestion();
+    } else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex) {
+        // If incorrect, subtract 5sec from timer
+        timeLeft = timeLeft - timePenalty;
+        alert("Incorrect!")
+        currentQuestionIndex++;
+        showQuestion();
+    } else {
+        userScore();
+    };
+};
+
+function userScore() {
+    containerEl.setAttribute("class", "hide");
+    gameOverEl.removeAttribute("class", "hide");
+};
 
 // starts coding quiz
 startQuizEl.addEventListener("click", startQuiz);
