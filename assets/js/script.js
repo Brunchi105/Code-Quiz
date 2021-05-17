@@ -51,7 +51,7 @@ var jsCodingQuiz = [
 ];
 
 let score = 0;
-let timeLeft = 50;
+let timeLeft = 30;
 const timePenalty = 5;
 var finalQuestionIndex = jsCodingQuiz.length;
 var currentQuestionIndex = 0;
@@ -61,6 +61,7 @@ let containerEl = document.querySelector(".container");
 let modalEl = document.querySelector(".modal");
 let timerEl = document.querySelector("#timer");
 let gameOverEl = document.querySelector(".game-over");
+let finalScoreEl = document.querySelector("#finalscore");
 var choiceOptionA = document.querySelector("#a");
 var choiceOptionB = document.querySelector("#b");
 var choiceOptionC = document.querySelector("#c");
@@ -80,7 +81,6 @@ var showQuestion = function () {
 }       
 
 function startQuiz() {
-    debugger;
     // hides homepage & displays quiz
     modalEl.setAttribute("class", "hide");
     containerEl.removeAttribute("class", "hide");
@@ -101,8 +101,17 @@ function countdowmTimer() {
     }, 1000);
 };
 
-function compareAnswers(answer) {
-    correct = jsCodingQuiz[currentQuestionIndex].answer
+
+
+//displays quiz results & allows user to enter name
+function userScore() {
+    containerEl.setAttribute("class", "hide");
+    gameOverEl.removeAttribute("class", "hide");
+    finalScoreEl.textContent = "Thank you for playing. Your score is " + score + ".";
+};
+
+function compareAnswer(answer) {
+    correct = jsCodingQuiz[currentQuestionIndex].answer;
 
     if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
         score++;
@@ -113,16 +122,11 @@ function compareAnswers(answer) {
         // If incorrect, subtract 5sec from timer
         timeLeft = timeLeft - timePenalty;
         alert("Incorrect!")
-        currentQuestionIndex++;
+        currentQuestionIndex++;     
         showQuestion();
     } else {
         userScore();
     };
-};
-
-function userScore() {
-    containerEl.setAttribute("class", "hide");
-    gameOverEl.removeAttribute("class", "hide");
 };
 
 // starts coding quiz
